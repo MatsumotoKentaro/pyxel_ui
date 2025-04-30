@@ -1,6 +1,6 @@
 import pyxel
 
-from mini_ui import Button, Label
+from mini_ui import Button, Column, Label
 
 pyxel.init(160, 160, "Hello Pyxel")
 
@@ -16,15 +16,24 @@ def update_text():
 
 button = Button("Hello, Button", update_text, 10, 50, 100, 16, 1, 2)
 
+menu_ui = Column(
+    64,
+    64,
+    spacing=12,
+    children=[
+        label,
+        button,
+    ],
+)
+
 
 def update():
-    button.update()
+    menu_ui.update()
 
 
 def draw():
     pyxel.cls(0)
-    label.draw()
-    button.draw()
+    menu_ui.draw()
 
 
 pyxel.run(update, draw)
