@@ -70,6 +70,8 @@ App()
 
 ```
 
+[サンプル](https://matsumotokentaro.github.io/pyxel_ui/)
+
 ## クラス概要
 
 ### `Widget`
