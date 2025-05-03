@@ -1,7 +1,6 @@
 import pyxel
 
-from localstorage import load, save
-from mini_ui import Button, Column, Label
+from mini_ui import Button, Column, Label, load, save
 
 
 class App:
