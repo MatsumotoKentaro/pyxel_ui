@@ -33,7 +33,8 @@ class Button(Widget):
         h=16,
         color_text=1,
         color_rect=1,
-        center_x=False,
+        center_x=True,
+        fill=False,
     ):
         self.text = text
         self.on_pressed = on_pressed
@@ -44,6 +45,7 @@ class Button(Widget):
         self.color_text = color_text
         self.color_rect = color_rect
         self.center_x = center_x
+        self.fill = fill
 
     def update(self):
         if (
@@ -54,7 +56,11 @@ class Button(Widget):
             self.on_pressed()
 
     def draw(self):
-        pyxel.rect(self.x, self.y, self.w, self.h, self.color_rect)
+        if self.fill:
+            pyxel.rect(self.x, self.y, self.w, self.h, self.color_rect)
+        else:
+            pyxel.rectb(self.x, self.y, self.w, self.h, self.color_rect)
+
         text_x = self.x + 4
         if self.center_x:
             text_x = self.x + self.w // 2 - pyxel.FONT_WIDTH * len(self.text) // 2
@@ -62,23 +68,49 @@ class Button(Widget):
         pyxel.text(text_x, text_y, self.text, 0)
 
 
+class TransButton(Widget):
+    def __init__(self, on_pressed, w, h, x=0, y=0):
+        self.on_pressed = on_pressed
+        self.w = w
+        self.h = h
+        self.x = x
+        self.y = y
+
+    def update(self):
+        if (
+            pyxel.btnp(pyxel.MOUSE_BUTTON_LEFT)
+            and self.x <= pyxel.mouse_x <= self.x + self.w
+            and self.y <= pyxel.mouse_y <= self.y + self.h
+        ):
+            self.on_pressed()
+
+    def draw(self):
+        pass
+
+
+class Blank(Widget):
+    def __init__(self, w=0, h=0):
+        self.w = w
+        self.h = h
+
+
 # 縦に並べるレイアウト
 class Column(Widget):
     def __init__(
         self,
-        x,
-        y,
+        x=0,
+        y=0,
         w=None,
         h=None,
-        spacing=8,
+        spacing=0,
         children=[],
         center=True,
         align="center",
     ):
         self.x = x
         self.y = y
-        self.w = w
-        self.h = h
+        self.w = w if w is not None else pyxel.width
+        self.h = h if h is not None else pyxel.height
         self.spacing = spacing
         self.children = children
         self.center = center  # Y軸の中央揃え
