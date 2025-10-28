@@ -48,7 +48,13 @@ def save(key, value):
 
 
 def load(key):
-    return js.localStorage.getItem(key)
+    # LocalStorageから値を取得
+    value = js.localStorage.getItem(key)
+    # JsNull（存在しないキー）の場合、Noneを返す
+    if value is js.NULL:
+        return None  # Python側で扱いやすい None に変換
+    # 存在する場合は、その値を返す
+    return value
 
 
 def remove(key):
