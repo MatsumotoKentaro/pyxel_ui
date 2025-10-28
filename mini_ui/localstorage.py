@@ -3,7 +3,7 @@ import os
 
 try:
     import js  # Pyodide環境
-    from pyodide.ffi import JsNull
+    from pyodide.ffi import jsnull
 except ImportError:
 
     class FileBackedLocalStorage:
@@ -52,7 +52,7 @@ def load(key):
     # LocalStorageから値を取得
     value = js.localStorage.getItem(key)
     # JsNull（存在しないキー）の場合、Noneを返す
-    if value is JsNull:
+    if value is jsnull:
         return None  # Python側で扱いやすい None に変換
     # 存在する場合は、その値を返す
     return value
