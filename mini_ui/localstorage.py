@@ -52,7 +52,7 @@ def load(key):
     # LocalStorageから値を取得
     value = js.localStorage.getItem(key)
     # JsNull（存在しないキー）の場合、Noneを返す
-    if type(value) is JsNull:
+    if isinstance(value, JsNull):
         return None  # Python側で扱いやすい None に変換
     # 存在する場合は、その値を返す
     return value
